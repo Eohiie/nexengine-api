@@ -1,0 +1,101 @@
+function clearScreen()
+  term.clear()
+  term.setCursorPos(1,1)
+end
+
+function newLine()
+  x,y = term.getCursorPos()
+  term.setCursorPos(1,(y+1))
+end
+
+function nextLine()
+  x,y = term.getCursorPos()
+  term.setCursorPos(3,(y+1))
+end
+
+function drawSplash(titleText,splashColor)
+  xMax,yMax = term.getSize()
+  term.clear()
+  
+  if(term.isColor() == true)then
+    if(splashColor~=nil)then
+      term.setTextColor(splashColor)
+    else
+      term.setTextColor(colors.white)
+    end
+  end
+  
+  strLen = 0
+  str1 = "| " .. titleText .. " |"
+  strLen = string.len(str1)
+  
+  str2 = "/"
+  for i=1,(strLen-2) do
+    str2 = str2 .. "-"
+  end
+  str2 = str2 .. "\\"
+  
+  str3 = "\\"
+  for i=1,(strLen-2) do
+    str3 = str3 .. "-"
+  end
+  str3 = str3 .. "/"
+  
+  term.setCursorPos(((xMax/2)-(strLen/2)),((yMax/2)-1))
+  write(str2)
+  term.setCursorPos(((xMax/2)-(strLen/2)),(yMax/2))
+  write(str1)
+  term.setCursorPos(((xMax/2)-(strLen/2)),((yMax/2)+1))
+  write("|")
+  term.setCursorPos(((xMax/2)+(strLen/2)-1),((yMax/2)+1))
+  write("|")
+  term.setCursorPos(((xMax/2)-(strLen/2)),((yMax/2)+2))
+  write(str3)
+end
+
+function drawDialog(watermarkText,borderColor)
+  xMax,yMax = term.getSize()
+  
+  if(term.isColor() == true)then
+    if(borderColor~=nil)then
+      term.setTextColor(borderColor)
+    else
+      term.setTextColor(colors.white)
+    end
+  end
+  
+  str1 = "/"
+  for i=1,(xMax-2) do
+    str1 = str1 .. "-"
+  end
+  str1 = str1 .. "\\"
+  
+  str2 = "\\"
+  for i=1,(xMax-2) do
+    str2 = str2 .. "-"
+  end
+  str2 = str2 .. "/"
+  
+  term.clear()
+  term.setCursorPos(1,1)
+  write(str1)
+  
+  for i=1,(yMax-2) do
+    newLine()
+    write("|")
+    xCur,yCur = term.getCursorPos()
+    term.setCursorPos((xMax),yCur)
+    write("|")
+  end
+  
+  newLine()
+  write(str2)
+  
+  if(watermarkText~=nil)then
+    xCur,yCur = term.getCursorPos()
+    term.setCursorPos((xMax-string.len(watermarkText)-3),(yCur))
+    write(" "..watermarkText.." ")
+  end
+  
+  term.setCursorPos(3,2)
+end

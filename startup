@@ -1,0 +1,22 @@
+os.loadAPI("/disk/apis/diag")
+diag.drawSplash("NexEngine APIs",colors.cyan)
+sleep(2)
+diag.drawDialog("NexEngine APIs",colors.cyan)
+write("Press I to install APIs.")
+diag.nextLine()
+write("Press D to open documentation.")
+diag.nextLine()
+write("Press U to uninstall APIs.")
+diag.nextLine()
+write("Press ANY key to exit.")
+event,p1,p2,p3,p4 = os.pullEvent("key")
+if(p1==23)then
+  shell.run("/disk/install")
+elseif(p1==32)then
+  shell.run("/disk/documentation")
+elseif(p1==22)then
+  shell.run("/disk/uninstall")
+else
+  diag.clearScreen()
+  return
+end

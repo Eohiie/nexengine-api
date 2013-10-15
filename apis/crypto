@@ -1,0 +1,17 @@
+function encodeMessage(modemSide,rawString)
+  modem = peripheral.wrap(modemSide)
+  modem.transmit(995,996,rawString)
+  modem.open(996)
+  event,p1,p2,p3,p4 = os.pullEvent("modem_message")
+  modem.close(996)
+  return p4
+end
+
+function decodeMessage(modemSide,encodedString)
+  modem = peripheral.wrap(modemSide)
+  modem.transmit(995,996,encodedString)
+  modem.open(996)
+  event,p1,p2,p3,p4 = os.pullEvent("modem_message")
+  modem.close(996)
+  return p4
+end

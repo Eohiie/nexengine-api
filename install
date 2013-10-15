@@ -1,0 +1,22 @@
+os.loadAPI("/disk/apis/diag")
+diag.drawDialog("NexEngine APIs",colors.cyan)
+write("Copying new APIs")
+diag.nextLine()
+write("Preparing directories")
+fs.makeDir("/apis/")
+diag.nextLine()
+write("> Copying [crypto]")
+if(fs.exists("/apis/crypto")==true)then
+  fs.delete("/apis/crypto")
+end
+diag.nextLine()
+write("> Copying [diag]")
+if(fs.exists("/apis/diag")==true)then
+  fs.delete("/apis/diag")
+end
+fs.copy
+diag.nextLine()
+diag.nextLine()
+write("APIs successfully installed.")
+sleep(2)
+diag.clearScreen()
