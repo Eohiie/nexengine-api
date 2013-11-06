@@ -9,12 +9,13 @@ write("> Copying [crypto]")
 if(fs.exists("/apis/crypto")==true)then
   fs.delete("/apis/crypto")
 end
+fs.copy("/disk/apis/crypto","/apis/crypto")
 diag.nextLine()
 write("> Copying [diag]")
 if(fs.exists("/apis/diag")==true)then
   fs.delete("/apis/diag")
 end
-fs.copy
+fs.copy("/disk/apis/diag","/apis/diag")
 diag.nextLine()
 diag.nextLine()
 write("APIs successfully installed.")

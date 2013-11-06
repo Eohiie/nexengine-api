@@ -99,3 +99,80 @@ function drawDialog(watermarkText,borderColor)
   
   term.setCursorPos(3,2)
 end
+
+function drawMenu(watermarkText,borderColor,o1,o2,o3,o4,o5,o6,o7,o8,o9,o10)
+  drawDialog(watermarkText,borderColor)
+  if(o1~=nil)then
+    write("[ ] " .. o1)
+    nextLine()
+    maxOption = 1
+    if(o2~=nil)then
+      write("[ ] " .. o2)
+      nextLine()
+      maxOption = 2
+      if(o3~=nil)then
+        write("[ ] " .. o3)
+        nextLine()
+        maxOption = 3
+        if(o4~=nil)then
+          write("[ ] " .. o4)
+          nextLine()
+          maxOption = 4
+          if(o5~=nil)then
+            write("[ ] " .. o5)
+            nextLine()
+            maxOption = 5
+            if(o6~=nil)then
+              write("[ ] " .. o6)
+              nextLine()
+              maxOption = 6
+              if(o7~=nil)then
+                write("[ ] " .. o7)
+                nextLine()
+                maxOption = 7
+                if(o8~=nil)then
+                  write("[ ] " .. o8)
+                  nextLine()
+                  maxOption = 8
+                  if(o9~=nil)then
+                    write("[ ] " .. o9)
+                    nextLine()
+                    maxOption = 9
+                    if(o10~=nil)then
+                      write("[ ] " .. o10)
+                      nextLine()
+                      maxOption = 10
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  
+  term.setCursorPos(4,2)
+  write("X")
+  aa = true
+  currentOption = 1
+  while aa == true do
+    event,key = os.pullEvent("key")
+    if(key==200) and (currentOption~=1) then
+      term.setCursorPos(4,(currentOption+1))
+      write(" ")
+      currentOption = currentOption - 1
+      term.setCursorPos(4,(currentOption+1))
+      write("X")
+    elseif(key==208) and (currentOption~=maxOption) then
+      term.setCursorPos(4,(currentOption+1))
+      write(" ")
+      currentOption = currentOption + 1
+      term.setCursorPos(4,(currentOption+1))
+      write("X")
+    elseif(key==28)then
+      return currentOption
+    end
+  end
+end
