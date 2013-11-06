@@ -16,8 +16,7 @@ if(fs.exists("/apis/diag")==true)then
   fs.delete("/apis/diag")
 end
 fs.copy("/disk/apis/diag","/apis/diag")
-diag.nextLine()
-diag.nextLine()
+diag.nextLine(2)
 write("APIs successfully installed.")
-sleep(2)
-diag.clearScreen()
+diag.waitForKey()
+shell.run("disk/startup")

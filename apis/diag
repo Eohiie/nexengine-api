@@ -8,9 +8,20 @@ function newLine()
   term.setCursorPos(1,(y+1))
 end
 
-function nextLine()
+function nextLine(count)
   x,y = term.getCursorPos()
-  term.setCursorPos(3,(y+1))
+  if count == nil then
+    term.setCursorPos(3,(y+1))
+  else
+    term.setCursorPos(3,(y+count))
+  end
+end
+
+function waitForKey()
+  xMax,yMax = term.getSize()
+  term.setCursorPos(3,yMax-1)
+  write("Press any key to continue")
+  os.pullEvent("key")
 end
 
 function drawSplash(titleText,splashColor)
@@ -159,18 +170,34 @@ function drawMenu(watermarkText,borderColor,o1,o2,o3,o4,o5,o6,o7,o8,o9,o10)
   currentOption = 1
   while aa == true do
     event,key = os.pullEvent("key")
-    if(key==200) and (currentOption~=1) then
-      term.setCursorPos(4,(currentOption+1))
-      write(" ")
-      currentOption = currentOption - 1
-      term.setCursorPos(4,(currentOption+1))
-      write("X")
-    elseif(key==208) and (currentOption~=maxOption) then
-      term.setCursorPos(4,(currentOption+1))
-      write(" ")
-      currentOption = currentOption + 1
-      term.setCursorPos(4,(currentOption+1))
-      write("X")
+    if(key==200) then
+      if (currentOption~=1) then
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = currentOption - 1
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      else
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = maxOption
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      end
+    elseif(key==208) then
+      if (currentOption~=maxOption) then
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = currentOption + 1
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      else
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = 1
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      end
     elseif(key==28)then
       return currentOption
     end
