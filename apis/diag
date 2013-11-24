@@ -111,63 +111,28 @@ function drawDialog(watermarkText,borderColor)
   term.setCursorPos(3,2)
 end
 
-function drawMenu(watermarkText,borderColor,o1,o2,o3,o4,o5,o6,o7,o8,o9,o10)
+function drawMenu(watermarkText,borderColor,defaultOption,items)
   drawDialog(watermarkText,borderColor)
-  if(o1~=nil)then
-    write("[ ] " .. o1)
-    nextLine()
-    maxOption = 1
-    if(o2~=nil)then
-      write("[ ] " .. o2)
-      nextLine()
-      maxOption = 2
-      if(o3~=nil)then
-        write("[ ] " .. o3)
-        nextLine()
-        maxOption = 3
-        if(o4~=nil)then
-          write("[ ] " .. o4)
-          nextLine()
-          maxOption = 4
-          if(o5~=nil)then
-            write("[ ] " .. o5)
-            nextLine()
-            maxOption = 5
-            if(o6~=nil)then
-              write("[ ] " .. o6)
-              nextLine()
-              maxOption = 6
-              if(o7~=nil)then
-                write("[ ] " .. o7)
-                nextLine()
-                maxOption = 7
-                if(o8~=nil)then
-                  write("[ ] " .. o8)
-                  nextLine()
-                  maxOption = 8
-                  if(o9~=nil)then
-                    write("[ ] " .. o9)
-                    nextLine()
-                    maxOption = 9
-                    if(o10~=nil)then
-                      write("[ ] " .. o10)
-                      nextLine()
-                      maxOption = 10
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
+  if(items==nil)then
+    return false
   end
   
-  term.setCursorPos(4,2)
+  maxOption = table.getn(items)
+  term.setCursorPos(3,2)
+  for i=1, maxOption do
+    write("[ ] " .. items[i])
+    nextLine()
+  end
+  
+  if defaultOption ~= nil then
+    term.setCursorPos(4,defaultOption+1)
+    currentOption = defaultOption
+  else
+    term.setCursorPos(4,2)
+    currentOption = 1
+  end
   write("X")
   aa = true
-  currentOption = 1
   while aa == true do
     event,key = os.pullEvent("key")
     if(key==200) then
@@ -200,6 +165,84 @@ function drawMenu(watermarkText,borderColor,o1,o2,o3,o4,o5,o6,o7,o8,o9,o10)
       end
     elseif(key==28)then
       return currentOption
+    end
+  end
+end
+
+function drawMultiMenu(watermarkText,borderColor,items)
+	drawDialog(watermarkText,borderColor)
+	
+	maxOption = table.getn(items)
+  term.setCursorPos(3,2)
+  for i=1, maxOption do
+	write("[ ] " .. items[i])
+    nextLine()
+  end
+  
+  term.setCursorPos(3,yMax-2)
+  write("Press SPACE to select.")
+  nextLine()
+  write("Enter to continue.")
+  
+  if defaultOption ~= nil then
+    term.setCursorPos(4,defaultOption+1)
+    currentOption = defaultOption
+  else
+    term.setCursorPos(4,2)
+    currentOption = 1
+  end
+  selected = {}
+  for i=1, #items do
+    selected[i] = false
+  end
+  write("X")
+  aa = true
+  while aa == true do
+    event,key = os.pullEvent("key")
+    if(key==200) then
+      if (currentOption~=1) then
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = currentOption - 1
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      else
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = maxOption
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      end
+    elseif(key==208) then
+      if (currentOption~=maxOption) then
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = currentOption + 1
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      else
+        term.setCursorPos(4,(currentOption+1))
+        write(" ")
+        currentOption = 1
+        term.setCursorPos(4,(currentOption+1))
+        write("X")
+      end
+    elseif(key==57)then
+      if(selected[currentOption]==false)then
+        selected[currentOption] = items[currentOption]
+        term.setCursorPos(3,(currentOption+1))
+        write("{")
+        term.setCursorPos(5,(currentOption+1))
+        write("}")
+      else
+        selected[currentOption] = false
+        term.setCursorPos(3,(currentOption+1))
+        write("[")
+        term.setCursorPos(5,(currentOption+1))
+        write("]")
+      end
+    elseif(key==28)then
+      return selected
     end
   end
 end

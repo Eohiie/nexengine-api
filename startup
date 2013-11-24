@@ -1,7 +1,8 @@
 os.loadAPI("/disk/apis/diag")
 diag.drawSplash("NexEngine APIs",colors.cyan)
 sleep(1.5)
-result = diag.drawMenu("NexEngine",colors.cyan,"Install","Documentation","Uninstall","Exit")
+items = {"Install","Documentation","Uninstall","Exit"}
+result = diag.drawMenu("NexEngine",colors.cyan,nil,items)
 
   if (result == 1) then
     shell.run("/disk/install")

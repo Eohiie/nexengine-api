@@ -1,7 +1,11 @@
+rResult = 1
+dResult = 1
+
 function Reference()
-  result = diag.drawMenu("NexEngine",colors.cyan,"clearScreen()","newLine()","nextLine()","waitForKey()","drawSplash()","drawDialog()","drawMenu()","Exit")
+  items = {"clearScreen()","newLine()","nextLine()","waitForKey()","drawSplash()","drawDialog()","drawMenu()","Exit"}
+  rResult = diag.drawMenu("NexEngine",colors.cyan,rResult,items)
   
-  if result == 1 then
+  if rResult == 1 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("clearScreen()")
     diag.nextLine(3)
@@ -12,7 +16,7 @@ function Reference()
     write("Useful for quick screen resets.")
     diag.waitForKey()
     Reference()
-  elseif result == 2 then
+  elseif rResult == 2 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("newLine()")
     diag.nextLine(3)
@@ -21,7 +25,7 @@ function Reference()
     write("Useful for writing multi-line screens.")
     diag.waitForKey()
     Reference()
-  elseif result == 3 then
+  elseif rResult == 3 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("nextLine([count])")
     diag.nextLine(3)
@@ -36,7 +40,7 @@ function Reference()
     write("at 'x' 3.")
     diag.waitForKey()
     Reference()
-  elseif result == 4 then
+  elseif rResult == 4 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("waitForKey()")
     diag.nextLine(3)
@@ -45,7 +49,7 @@ function Reference()
     write("Works best with dialog boxes.")
     diag.waitForKey()
     Reference()
-  elseif result == 5 then
+  elseif rResult == 5 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("drawSplash(titleText,splashColor)")
     diag.nextLine(3)
@@ -54,7 +58,7 @@ function Reference()
     write("'splashColor' and text 'titleText'.")
     diag.waitForKey()
     Reference()
-  elseif result == 6 then
+  elseif rResult == 6 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("drawDialog([watermarkText],[borderColor])")
     diag.nextLine(3)
@@ -69,7 +73,7 @@ function Reference()
     write("[borderColor] is optional.")
     diag.waitForKey()
     Reference()
-  elseif result == 7 then
+  elseif rResult == 7 then
     diag.drawDialog("NexEngine",colors.cyan)
     write("drawMenu([watermarkText],[borderColor],o1,o2...")
     diag.nextLine(3)
@@ -80,8 +84,8 @@ function Reference()
     write("Returns index of chosen item.")
     diag.waitForKey()
     Reference()
-  elseif result == 8 then
-    load()
+  elseif rResult == 8 then
+    Documentation()
   end
 end
 
@@ -92,10 +96,8 @@ function License()
   write("This API has been released under")
   diag.nextLine()
   write("the Creative Commons 3.0 license.")
-  term.setCursorPos(3,yMax-1)
-  write("Press any key to return")
-  os.pullEvent("key")
-  shell.run("/disk/documentation")
+  diag.waitForKey()
+  Documentation()
 end
 
 function Credits()
@@ -107,25 +109,24 @@ function Credits()
   write("Eohiie and Reichelderferm.")
   diag.nextLine(2)
   write("Bug testing handled by Wjmpdx and Xion.")
-  term.setCursorPos(3,yMax-1)
-  write("Press any key to return")
-  os.pullEvent("key")
-  shell.run("/disk/documentation")
+  diag.waitForKey()
+  Documentation()
 end
 
-function load()
+function Documentation()
 os.loadAPI("/disk/apis/diag")
-result = diag.drawMenu("NexEngine",colors.cyan,"Reference","License","Credits","Exit")
+items = {"Reference","License","Credits","Exit"}
+dResult = diag.drawMenu("NexEngine",colors.cyan,dResult,items)
 
-if result == 1 then
+if dResult == 1 then
   Reference()
-elseif result == 2 then
+elseif dResult == 2 then
   License()
-elseif result == 3 then
+elseif dResult == 3 then
   Credits()
-elseif result == 4 then
-  shell.run("disk/startup")
+elseif dResult == 4 then
+  shell.run("/disk/startup")
 end
 end
 
-load()
+Documentation()

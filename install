@@ -1,22 +1,23 @@
 os.loadAPI("/disk/apis/diag")
-diag.drawDialog("NexEngine APIs",colors.cyan)
+results = diag.drawMultiMenu("NexEngine APIs",colors.cyan,{"Crypto","Diag"})
+
+term.setCursorPos(3,2)
 write("Copying new APIs")
 diag.nextLine()
 write("Preparing directories")
 fs.makeDir("/apis/")
-diag.nextLine()
-write("> Copying [crypto]")
-if(fs.exists("/apis/crypto")==true)then
-  fs.delete("/apis/crypto")
+diag.nextLine(2)
+
+for i=1, table.getn(results) do
+  if(results[i]~=false)then
+    write(" > Copying [" .. results[i] .. "]")
+    if(fs.exists("/apis/" .. string.lower(results[i]))==true)then
+      fs.delete("/apis/"..string.lower(results[i]))
+    end
+    fs.copy("/disk/apis/"..string.lower(results[i]),"/apis/"..string.lower(results[i]))
+  end
 end
-fs.copy("/disk/apis/crypto","/apis/crypto")
-diag.nextLine()
-write("> Copying [diag]")
-if(fs.exists("/apis/diag")==true)then
-  fs.delete("/apis/diag")
-end
-fs.copy("/disk/apis/diag","/apis/diag")
 diag.nextLine(2)
 write("APIs successfully installed.")
 diag.waitForKey()
-shell.run("disk/startup")
+shell.run("/disk/startup")
